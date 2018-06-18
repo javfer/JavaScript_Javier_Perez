@@ -41,15 +41,12 @@ function t_imagenS() {
 
 function paraDisplay(){
   if  (validarFinArreglo==1){
-  if (Arreglo.length>0){
-
-    var nume=Arreglo.length;
+  var nume=Arreglo.length;
     var carater=Arreglo[nume-1];
-      if(carater=="+"){
+      if((carater=="+")||(carater=="-")||(carater=="*")||(carater=="/")||(carater=="raiz")){
         document.querySelector("#calculadoraFondo #display").innerHTML="0";
         enPantalla="";
       }
-    }
     validarFinArreglo=0;
   }
 
@@ -57,6 +54,7 @@ function paraDisplay(){
     paraPantalla="0";
     document.querySelector(".nota-input")
     .innerHTML="";
+    Arreglo=[];
     return;
 }else if (enPantalla=="0"){
 enPantalla="";
@@ -157,7 +155,9 @@ return;
     return;
     break;
     case "igual":
-      alert(id_presionada);
+      var  agregaSigno="";
+      agregarOperacion(agregaSigno)
+      resultado();
     return;
     break;
     case "mas":
@@ -201,3 +201,72 @@ function colocarPunto() {
   paraPantalla=enPantalla+".";
   return;
 }
+
+function resultado() {
+  var total=0;
+
+  for (i=0; i<Arreglo.length;i++){
+
+    var valor1=0;
+    var valor2=0;
+    var operacioEcha=0;
+
+    valor1=Number(Arreglo[i-1]);
+    valor2=Number(Arreglo[i+1]);
+
+        if (Arreglo[i]=="raiz"){
+
+          total=Math.sqrt(valor1);
+          operacioEcha=1;
+        }
+    }
+        for (i=0; i<Arreglo.length;i++){
+          var valor1=0;
+          var valor2=0;
+          var operacioEcha=0;
+          
+        if ((Arreglo[i]=="*") || if (Arreglo[i]=="/")){
+        if (Arreglo[i]=="*"){
+
+            total=valor1*valor2;
+            operacioEcha=1;
+
+        }else if (Arreglo[i]=="/"){
+
+            total=valor1/valor2;
+            operacioEcha=1;
+
+        }else if (Arreglo[i]=="-"){
+
+            total=valor1-valor2;
+            operacioEcha=1;
+
+        }else if (Arreglo[i]=="+"){
+
+            total=valor1+valor2;
+            operacioEcha=1;
+
+        }
+
+        if (operacioEcha==1) {
+
+          Arreglo[i]=total;
+            Arreglo.splice(i+1,1);
+            Arreglo.splice(i-1,1);
+            i=0;
+
+
+        }
+}//fin for
+
+  for (var i = 0; i < Arreglo.length; i++) {
+    var valorArreglo=Arreglo[i];
+    paraUnirArre=paraUnirArre+valorArreglo;
+  }
+  document.querySelector(".nota-input")
+  .innerHTML=paraUnirArre;
+
+
+
+
+}//fi funio
